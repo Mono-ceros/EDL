@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 468028}
   - component: {fileID: 3375046}
   - component: {fileID: 2371978}
-  - component: {fileID: 7165043016040268992}
+  - component: {fileID: -3563217995805626489}
   m_Layer: 0
   m_Name: SM_Env_Bone_Rigcage_01
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7165043016040268992
-BoxCollider:
+--- !u!64 &-3563217995805626489
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,6 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 9.569912, y: 8.488742, z: 14.698196}
-  m_Center: {x: 0.0000019073486, y: 3.7178218, z: 0.0000076293945}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 19943a3f2b30bc74c80b50dc1c4a11f1, type: 3}

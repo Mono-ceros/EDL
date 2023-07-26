@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 427962}
   - component: {fileID: 3370480}
   - component: {fileID: 2381336}
-  - component: {fileID: 64770429231817644}
+  - component: {fileID: 8586054137213732005}
   m_Layer: 0
   m_Name: SM_Env_GroundMound_01
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64770429231817644
-MeshCollider:
+--- !u!65 &8586054137213732005
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6210eefa6dfd9fe44804d85bd670ace9, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 8.490562, y: 0.69732887, z: 8.298727}
+  m_Center: {x: 0.16518784, y: 0.34866443, z: -0.010205269}

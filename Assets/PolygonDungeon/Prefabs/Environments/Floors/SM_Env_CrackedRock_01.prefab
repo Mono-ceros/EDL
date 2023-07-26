@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 423422}
   - component: {fileID: 3316062}
   - component: {fileID: 2355510}
-  - component: {fileID: 64165671488690592}
+  - component: {fileID: -1409059376102824338}
   m_Layer: 0
   m_Name: SM_Env_CrackedRock_01
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64165671488690592
+--- !u!64 &-1409059376102824338
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
