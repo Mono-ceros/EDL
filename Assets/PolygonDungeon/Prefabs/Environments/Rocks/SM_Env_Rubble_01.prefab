@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 480294}
   - component: {fileID: 3314608}
   - component: {fileID: 2332638}
-  - component: {fileID: 1904201651212828956}
+  - component: {fileID: 2478520040619453748}
   m_Layer: 0
   m_Name: SM_Env_Rubble_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &480294
 Transform:
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1904201651212828956
-BoxCollider:
+--- !u!64 &2478520040619453748
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,6 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.6753397, y: 1.3596555, z: 5.526236}
-  m_Center: {x: 0.0000027418137, y: 0.5162272, z: 0}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 58e395e92f671ee479f21644c4f35edd, type: 3}
