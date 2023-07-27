@@ -12,6 +12,7 @@ public class Life : MonoBehaviour, IDamage
     public float hp; // 현재 체력
     public bool dead; // 사망 상태
     public event Action onDeath; // 사망시 발동할 이벤트
+    public event Action onAttack; // 공격 이벤트
 
     //체력 초기화
     public virtual void OnEnable()
@@ -66,4 +67,13 @@ public class Life : MonoBehaviour, IDamage
         // 사망 상태를 참으로 변경
         dead = true;
     }
+
+    public virtual void Attack()
+    {
+        if (onAttack != null)
+        {
+            onAttack();
+        }
+    }
+
 }

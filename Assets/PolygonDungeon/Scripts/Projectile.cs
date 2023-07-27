@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     }
     private void OnEnable()
     {
-        rb.AddForce(transform.forward * speed);
+        rb.velocity =transform.forward * speed;
     }
 
     private void OnDisable()

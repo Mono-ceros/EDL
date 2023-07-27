@@ -22,7 +22,7 @@ public class MonsterAngle : MonoBehaviour
         //태그로 플래이어 트랜스폼 찾으니까 태그 이름 지정 잘하기
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
 
-        //레이어이름도 지정
+        //레이어이름 지정
         playerLayer = LayerMask.NameToLayer("Player");
         obstacleLayer = LayerMask.NameToLayer("OBSTACLE");
         //레이어마스크 = 비트
