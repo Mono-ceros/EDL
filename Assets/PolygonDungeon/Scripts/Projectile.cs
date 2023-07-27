@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     Transform tr;
 
+    public float damage = 10;
     public float speed = 1000;
 
     private void Awake()
@@ -17,7 +18,8 @@ public class Projectile : MonoBehaviour
     }
     private void OnEnable()
     {
-        rb.velocity =transform.forward * speed;
+
+        rb.AddForce(transform.forward * speed);
     }
 
     private void OnDisable()

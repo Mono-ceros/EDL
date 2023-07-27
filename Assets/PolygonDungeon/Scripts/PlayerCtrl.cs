@@ -12,10 +12,14 @@ public class PlayerAnim
     //public AnimationClip runL;
     //public AnimationClip runR;
 }
-public class PlayerCtrl : MonoBehaviour
+public class PlayerCtrl : Life
 {
 
     bool isBorder = false;
+
+    public ParticleSystem hitEffect;
+    public AudioClip hitSound;
+    AudioSource playerAudioPlayer;
 
     float h = 0f;
     float v = 0f;
@@ -33,6 +37,7 @@ public class PlayerCtrl : MonoBehaviour
     private void OnEnable()
     {
         tr = GetComponent<Transform>();
+        playerAudioPlayer = GetComponent<AudioSource>();
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
         //anim = GetComponent<Animation>();
         //anim.clip = playerAnim.idle;
@@ -79,7 +84,6 @@ public class PlayerCtrl : MonoBehaviour
         stopToWall();
         if (isBorder) moveSpeed = 0;
         else moveSpeed = 10;
-        Debug.Log(moveSpeed);
         //Debug.Log(moveSpeed);
         tr.Translate(moveDir.normalized * moveSpeed * Time.deltaTime, Space.Self);
         //Rotate 회전 함수
@@ -89,5 +93,22 @@ public class PlayerCtrl : MonoBehaviour
     void stopToWall()
     {
         isBorder = Physics.Raycast(transform.position, transform.forward, 1, 1 << obstacleLayer) && Physics.Raycast(transform.position, transform.forward, -1, 1 << obstacleLayer);
+    }
+
+    // monster의 온데미지는 피격 파티클을 재생하고
+    //base의 온데미지를 호출해 데미지 적용
+    public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        if (!dead)
+        {
+            //공격받은 지점과 방향으로 파티클 효과 재생
+            hitEffect.transform.position = hitPoint;
+            hitEffect.transform.rotation = Quaternion.LookRotation(hitNormal);
+            hitEffect.Play();
+
+            //피격 효과음 재생
+            playerAudioPlayer.PlayOneShot(hitSound);
+        }
+        base.OnDamage(damage, hitPoint, hitNormal);
     }
 }

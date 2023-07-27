@@ -15,6 +15,8 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class Monster : Life
 {
+    //뭔가 문제 생기면 자식들 레이어가 몬스터가 아니라서 그럴수도
+
     //달리기랑 걷기
     //달리기를 하면 일정범위 감지해서 바로 추적
     public LayerMask targetLayer; // 추적 대상 레이어
@@ -29,6 +31,7 @@ public class Monster : Life
     private Animator monsterAnimater; // 애니메이터 컴포넌트
     private AudioSource monsterAudioPlayer; // 오디오 소스 컴포넌트
     MonsterAngle monsterAngle;
+    MonsterPatrol monsterPatrol;
 
     public float damage; // 공격력
     public float timeBetAttack = 0.5f; // 공격 간격
@@ -92,6 +95,7 @@ public class Monster : Life
         navMeshAgent = GetComponent<NavMeshAgent>();
         monsterAnimater = GetComponent<Animator>();
         monsterAudioPlayer = GetComponent<AudioSource>();
+        monsterPatrol = GetComponent<MonsterPatrol>();
         ws = new WaitForSeconds(0.3f);
         navMeshAgent.updateRotation = false;
     }
@@ -107,15 +111,16 @@ public class Monster : Life
         attackDist = monsterData.attackDist;
     }
 
-    private new
-        void OnEnable()
+    private new void OnEnable()
     {
         StartCoroutine(UpdatePath());
+        StartCoroutine(CheckState());
+        StartCoroutine(Action());
     }
 
     private void FixedUpdate()
     {
-        transform.LookAt(target.gameObject.transform);
+        
     }
 
     /// <summary>
@@ -132,6 +137,7 @@ public class Monster : Life
             {
                 //추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 navMeshAgent.isStopped = false;
+                transform.LookAt(target.transform);
                 navMeshAgent.SetDestination(
                     target.transform.position);
             }
@@ -249,7 +255,7 @@ public class Monster : Life
                 yield break;
 
             float dist = Vector3.Distance(this.transform.position,
-                                           target.gameObject.transform.position);
+                                           target.transform.position);
             if (dist <= attackDist)
             {
                 if (monsterAngle.isViewPlayer())
@@ -288,16 +294,16 @@ public class Monster : Life
             {
                 case State.PATROL:
                     //enemyFire.isFire = false;
-                    //moveAgent.PATROLLING = true;
+                    monsterPatrol.PATROLLING = true;
                     monsterAnimater.SetBool(hashMove, true);
                     break;
                 case State.TRACE:
                     //enemyFire.isFire = false;
-                    //moveAgent.TRACETARGET = playerTr.position;
+                    monsterPatrol.TRACETARGET = target.transform.position;
                     monsterAnimater.SetBool(hashHasTarget, hasTarget);
                     break;
                 case State.ATTACK:
-                    //moveAgent.Stop();
+                    monsterPatrol.Stop();
                     monsterAnimater.SetBool(hashMove, false);
                     //if (!enemyFire.isFire)
                     //{
@@ -309,12 +315,12 @@ public class Monster : Life
 
                     dead = true;
                     //enemyFire.isFire = false;
-                    //moveAgent.Stop();
+                    monsterPatrol.Stop();
                     monsterAnimater.SetInteger(hashDieIdx, Random.Range(0, 3));
                     monsterAnimater.SetTrigger(hashDie);
 
                     //죽고나서 콜라이더 비활성화
-                    GetComponent<CapsuleCollider>().enabled = false;
+                    GetComponent<Collider>().enabled = false;
 
                     break;
             }
