@@ -26,7 +26,7 @@ public class PlayerCtrl : Life
     float r = 0f; //회전값 변수
 
     Transform tr;
-    public float moveSpeed = 10f;
+    public float moveSpeed = 8f;
     public float rotSpeed = 200f; //로테이션
     int obstacleLayer;
 
@@ -34,7 +34,7 @@ public class PlayerCtrl : Life
     // public PlayerAnim playerAnim;
     //public Animation anim;
 
-    private void OnEnable()
+    new void OnEnable()
     {
         tr = GetComponent<Transform>();
         playerAudioPlayer = GetComponent<AudioSource>();
@@ -78,13 +78,10 @@ public class PlayerCtrl : Life
         //수직 수평 이동 벡터의 벡터의 합으로 방향 벡터 계산
         Vector3 moveDir = (Vector3.forward * v) + (Vector3.right * h);
 
-        //Translate 위치 이동 함수
-        //정규화 메서드로 벡터 정규화
-        //대각선 사기맵 ㄴㄴ
         stopToWall();
-        if (isBorder) moveSpeed = 0;
-        else moveSpeed = 10;
-        //Debug.Log(moveSpeed);
+        if (isBorder) moveDir = (Vector3.forward * 0) + (Vector3.right * h);
+        //정규화 메서드로 벡터 정규화
+        //대각선 거리 맞추기
         tr.Translate(moveDir.normalized * moveSpeed * Time.deltaTime, Space.Self);
         //Rotate 회전 함수
         tr.Rotate(Vector3.up * rotSpeed * r * Time.deltaTime);
@@ -92,7 +89,7 @@ public class PlayerCtrl : Life
 
     void stopToWall()
     {
-        isBorder = Physics.Raycast(transform.position, transform.forward, 1, 1 << obstacleLayer) && Physics.Raycast(transform.position, transform.forward, -1, 1 << obstacleLayer);
+        isBorder = Physics.Raycast(transform.position, transform.forward, 1, 1 << obstacleLayer);
     }
 
     // monster의 온데미지는 피격 파티클을 재생하고

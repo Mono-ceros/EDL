@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2376244}
   - component: {fileID: 64819900136439752}
   - component: {fileID: 64117116701846134}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Env_Door_Large_Frame_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

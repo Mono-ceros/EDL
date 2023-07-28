@@ -11,7 +11,7 @@ public class CreatePlayer : MonoBehaviour
     void Start()
     {
         tr = GetComponent<Transform>();
-        po = tr.position + new Vector3(3f, -4.5f, 35f);
+        po = tr.position + new Vector3(3f, -4.5f, 50f);
         Instantiate(player, po, Quaternion.identity);
     }
 

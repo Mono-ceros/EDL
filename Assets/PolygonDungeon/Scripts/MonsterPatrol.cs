@@ -106,13 +106,12 @@ public class MonsterPatrol : MonoBehaviour
         if (agent.isPathStale)
             return;
         //다음 목적지를 리스트에서 추출해서 설정
-        agent.destination = wayPoints[nextIdx].position;
+        //agent.destination = wayPoints[nextIdx].position;
         //네비게이션 기능 활성화 = 움직임
         agent.isStopped = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    void _updatein()
     {
         if (!agent.isStopped)    //캐릭이 이동중이면
         {
@@ -141,5 +140,16 @@ public class MonsterPatrol : MonoBehaviour
 
             MoveWayPoint();
         }
+    }
+
+    IEnumerator enumerator()
+    {
+        _updatein();
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    void Update()
+    {
+        StartCoroutine(enumerator());
     }
 }

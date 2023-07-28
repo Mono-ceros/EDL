@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3368996}
   - component: {fileID: 2395020}
   - component: {fileID: 2800741794840449280}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Env_Wall_Pillar_Large_Round_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &483838
 Transform:

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 432648}
   - component: {fileID: 3324048}
   - component: {fileID: 2309808}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Env_Ceiling_Stone_Flat_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}

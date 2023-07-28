@@ -1081,7 +1081,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: b6ef2f4d0154b2747860a3332fa05f97, type: 3}
   m_Controller: {fileID: 9100000, guid: 3a5e4e497935864478c03eb2e0959bf6, type: 2}
   m_CullingMode: 1
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -1137,7 +1137,7 @@ MonoBehaviour:
   dead: 0
   hitEffect: {fileID: 637180509205656526}
   hitSound: {fileID: 8300000, guid: b29425b15ecf0f4458397b1095780a8f, type: 3}
-  moveSpeed: 10
+  moveSpeed: 7
   rotSpeed: 200
 --- !u!1 &2688957552063702737
 GameObject:
@@ -2615,14 +2615,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2689783481153769225}
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 2, z: -2}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2685294597283494695}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!20 &2689783481153769220
 Camera:
   m_ObjectHideFlags: 0

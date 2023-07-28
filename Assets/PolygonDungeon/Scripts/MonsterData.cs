@@ -9,4 +9,5 @@ public class MonsterData : ScriptableObject
     public float speed = 2f; // 이동 속도
     public float timeBetAttack = 1f; // 공격 속도
     public float attackDist = 5f; //사거리
+    public float traceDist = 10f; //추격 거리
 }

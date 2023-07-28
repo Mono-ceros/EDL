@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 492692}
   - component: {fileID: 3306782}
   - component: {fileID: 2312722}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SM_Env_Ceiling_Stone_Curved_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
