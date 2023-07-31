@@ -13,6 +13,7 @@ public class Life : MonoBehaviour, IDamage
     public bool dead; // 사망 상태
     public event Action onDeath; // 사망시 발동할 이벤트
     public event Action onAttack; // 공격 이벤트
+    public event Action damaged;
 
     //체력 초기화
     public virtual void OnEnable()
@@ -36,6 +37,11 @@ public class Life : MonoBehaviour, IDamage
         if (hp <= 0 && !dead)
         {
             Die();
+        }
+
+        if (damaged != null)
+        {
+            damaged();
         }
     }
 

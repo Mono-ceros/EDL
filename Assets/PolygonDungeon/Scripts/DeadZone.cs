@@ -8,5 +8,6 @@ public class DeadZone : MonoBehaviour
     {
         Life life = other.GetComponent<Life>();
         life.Die();
+        Debug.Log(other.ToString());
     }
 }

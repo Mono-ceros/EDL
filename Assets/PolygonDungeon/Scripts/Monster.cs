@@ -44,6 +44,8 @@ public class Monster : Life
     [Header("감지 거리")]
     public float traceDist = 0.5f;
 
+    GameObject player;
+
     public IObjectPool<Monster> poolToReturn;
 
     readonly int hashMove = Animator.StringToHash("isMove");
@@ -121,9 +123,27 @@ public class Monster : Life
 
     private new void OnEnable()
     {
-        StartCoroutine(UpdatePath());
+        //StartCoroutine(UpdatePath());
+        player = GameObject.FindGameObjectWithTag("Player");
+        //if (player != null)
+        //{
+            target = player.GetComponent<Life>();
+
+        //}
         StartCoroutine(CheckState());
         StartCoroutine(Action());
+    }
+
+    bool hasplayer
+    {
+        get
+        {
+            if(player != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     bool hasTarget
@@ -153,35 +173,37 @@ public class Monster : Life
         }
     }
 
+
+
     /// <summary>
     /// 주기적으로 타겟 검사, 없으면 타겟 지정
     /// 타겟이 존재하면 타겟이 시야 안에 들어와있는지 검사
     /// </summary>
     /// <returns></returns>
-    private IEnumerator UpdatePath()
-    {
-        // 살아 있는 동안 무한 루프
-        while (!dead)
-        {
-            if(!hasTarget)
-            {
-                //traceDist 만큼의 반지름을 가진 가상의 구를 그렸을 때 구와 겹치는 모든 콜라이더를 가져옴
-                //단, targetLayer 레이어를 가진 콜라이더만 가져오도록 필터링
-                Collider[] colliders =
-                    Physics.OverlapSphere(transform.position, traceDist, 1 << playerLayer);
+    //private IEnumerator UpdatePath()
+    //{
+    //    // 살아 있는 동안 무한 루프
+    //    while (!dead)
+    //    {
+    //        if(!hasTarget)
+    //        {
+    //            //traceDist 만큼의 반지름을 가진 가상의 구를 그렸을 때 구와 겹치는 모든 콜라이더를 가져옴
+    //            //단, targetLayer 레이어를 가진 콜라이더만 가져오도록 필터링
+    //            Collider[] colliders =
+    //                Physics.OverlapSphere(transform.position, traceDist, 1 << playerLayer);
 
-                if(colliders.Length > 0)
-                {
-                    //콜라이더로부터 LivingEntity 컴포넌트 가져오기
-                    Life livingEntity = colliders[0].GetComponent<Life>();
+    //            if(colliders.Length > 0)
+    //            {
+    //                //콜라이더로부터 LivingEntity 컴포넌트 가져오기
+    //                Life livingEntity = colliders[0].GetComponent<Life>();
 
-                    //추적 대상을 해당 LivingEntity로 설정
-                    target = livingEntity;
-                }
-            }
-            yield return ws;
-        }
-    }
+    //                //추적 대상을 해당 LivingEntity로 설정
+    //                target = livingEntity;
+    //            }
+    //        }
+    //        yield return ws;
+    //    }
+    //}
 
     // monster의 온데미지는 피격 파티클을 재생하고
     //base의 온데미지를 호출해 데미지 적용
@@ -265,13 +287,12 @@ public class Monster : Life
 
             float dist = Vector3.Distance(transform.position,
                                            target.transform.position);
-            Debug.Log(isLookPlayer);
-            if (isLookPlayer && dist <= attackDist && isTrace)
+            if (isLookPlayer && dist <= attackDist)
             {
                 //원뿔 안에만 있으면 제자리보고 공격하는 이슈가 있음
                 state = State.ATTACK;
             }
-            else if (hasTarget && dist <= traceDist)
+            else if (isTrace && dist <= traceDist)
             {
                 state = State.TRACE;
             }
