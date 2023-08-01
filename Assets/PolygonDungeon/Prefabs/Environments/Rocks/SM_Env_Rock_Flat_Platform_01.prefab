@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 422878}
   - component: {fileID: 3353632}
   - component: {fileID: 2307144}
-  - component: {fileID: 2999954601999286508}
+  - component: {fileID: 2331170821995134114}
   m_Layer: 0
   m_Name: SM_Env_Rock_Flat_Platform_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &422878
 Transform:
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 189862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3818661, y: 1.3818661, z: 1.3818661}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2999954601999286508
-BoxCollider:
+--- !u!64 &2331170821995134114
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,6 +94,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.140877, y: 5.8880954, z: 5.0501404}
-  m_Center: {x: 0, y: -2.7635348, z: 0}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 2ac644d62d8f99345a2effcb8a1a9e23, type: 3}
