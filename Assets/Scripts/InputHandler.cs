@@ -10,32 +10,19 @@ public class InputHandler : MonoBehaviour
     public float mouseX;
     public float mouseY;
 
-    public bool b_Input;
+    public bool space_input;
+    public bool leftShift_input;
+
     public bool rollFlag;
-    public bool isInteracting;
+    public bool sprintFlag;
+    public float rollInputTimer;
 
     //미리 만들어놓은 인풋액션
     PlayerControls inputActions;
-    CameraHandler cameraHandler;
 
     Vector2 movementInput;
     Vector2 cameraInput;
 
-    private void Awake()
-    {
-        cameraHandler = CameraHandler.singleton;
-    }
-
-    private void FixedUpdate()
-    {
-        float delta = Time.deltaTime;
-
-        if (cameraHandler != null)
-        {
-            cameraHandler.FollowTarget(delta);
-            cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
-        }
-    }
 
     public void OnEnable()
     {
@@ -57,14 +44,11 @@ public class InputHandler : MonoBehaviour
     }
     
 
-    /// <summary>
-    /// MoveInput값을 받아옴
-    /// </summary>
-    /// <param name="delta"></param>
     public void TickInput(float delta)
     {
         MoveInput(delta);
         HandleRollInput(delta);
+        HandleSprintInput(delta);
     }
 
     void MoveInput(float delta)
@@ -80,12 +64,28 @@ public class InputHandler : MonoBehaviour
 
     public void HandleRollInput(float delta)
     {
-        b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Started;
-
-        if(b_Input)
+        space_input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
+        if (space_input)
         {
-            rollFlag = true;
+            rollInputTimer += delta;
         }
+        else
+        {
+            if(rollInputTimer > 0 && rollInputTimer < 0.4f)
+            {
+                sprintFlag = false;
+                rollFlag = true;
+            }
+
+            rollInputTimer = 0;
+        }
+    }
+
+    public void HandleSprintInput(float delta)
+    {
+        leftShift_input = inputActions.PlayerActions.Sprint.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
+        if(leftShift_input)
+        sprintFlag = true;
     }
 
 }

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AnimatorHandler : MonoBehaviour
 {
+    PlayerManager playerManager;
     public Animator anim;
-    public InputHandler inputHandler;
-    public PlayerLocomotion playerLocomotion;
+    InputHandler inputHandler;
+    PlayerLocomotion playerLocomotion;
     int vertical;
     int horizontal;
     public bool canRotate;
@@ -21,7 +22,7 @@ public class AnimatorHandler : MonoBehaviour
         horizontal = Animator.StringToHash("Horizontal");
     }
 
-    public void UpdateAnimatorValues(float verticalMovenemt, float horizontalMovenemt)
+    public void UpdateAnimatorValues(float verticalMovenemt, float horizontalMovenemt, bool isSprinting)
     {
         //로코모션 업데이트문에서 애니메이터값 계속 확인
 
@@ -77,6 +78,13 @@ public class AnimatorHandler : MonoBehaviour
         }
         #endregion
 
+        //가만히 있지않고 스프린팅이 트루면 달림
+        if(isSprinting && inputHandler.moveAmount > 0)
+        {
+                v = 2;
+                h = horizontalMovenemt;
+        }
+
         anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
         anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
     }
@@ -85,6 +93,7 @@ public class AnimatorHandler : MonoBehaviour
     {
         anim.applyRootMotion = isInteracting;
         anim.SetBool("isInteracting", isInteracting);
+        //이 함수가 동작할때 원래 애니메이션에서 targetAnim으로 0.2초동안 부드럽게 전환 
         anim.CrossFade(targetAnim, 0.2f);
     }
 
@@ -99,13 +108,15 @@ public class AnimatorHandler : MonoBehaviour
         canRotate = false;
     }
 
+
     private void OnAnimatorMove()
     {
-        if (inputHandler.isInteracting == false)
+        if (playerManager.isInteracting == false)
             return;
-
         float delta = Time.deltaTime;
+        //리지드바디 저항을 0으로
         playerLocomotion.rigidbody.drag = 0;
+        //델타포지션으로 애니메이션 벨로시티값을 따라감
         Vector3 deltaPosition = anim.deltaPosition;
         deltaPosition.y = 0;
         Vector3 velocity = deltaPosition / delta;

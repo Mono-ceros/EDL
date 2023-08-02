@@ -79,14 +79,13 @@ public class CameraHandler : MonoBehaviour
         RaycastHit hit;
         Vector3 direction = cameraTransform.position - cameraPivotTransform.position; ;
         direction.Normalize();
-        
+        //Mathf.Abs(targetPosition)
         //가상의 구를 던져 첫번째 콜라이더 감지
         //시작점, 반지름, 방향, 충돌점, 최대거리, 레이어
-        //임마 동작 안함
         if (Physics.SphereCast
             (cameraPivotTransform.position,
              cameraSphereRadius, direction,
-             out hit, Mathf.Abs(targetPosition),
+             out hit, 2,
              ignoreLayers))
         {
             float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);
@@ -99,7 +98,7 @@ public class CameraHandler : MonoBehaviour
             targetPosition = -minimumCollisionOffset;
         }
 
-        camerTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, delta / 0.2f);
+        camerTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, delta * 10f);
         cameraTransform.localPosition = camerTransformPosition;
     }
 }
