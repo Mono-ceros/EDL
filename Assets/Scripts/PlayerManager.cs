@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    InputHandler inputHandler;
+    public InputHandler inputHandler;
     Animator anim;
 
     CameraHandler cameraHandler;
     PlayerLocomotion playerLocomotion;
 
     public bool isInteracting;
-    public bool isSprinting;
     public bool isInAir;
     public bool isGrounded;
+
+    public float interractTime;
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class PlayerManager : MonoBehaviour
         float delta = Time.deltaTime;
 
         isInteracting = anim.GetBool("isInteracting");
-        
+
         //플래이어 포지션
         inputHandler.TickInput(delta);
         playerLocomotion.HandleMovement(delta);
@@ -44,11 +45,12 @@ public class PlayerManager : MonoBehaviour
     {
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
-        isSprinting = inputHandler.leftShift_input;
+        inputHandler.rb_input = false;
+        inputHandler.rt_input = false;
 
         if(isInAir)
         {
-            playerLocomotion.inAirTimer = playerLocomotion.inAirTimer +Time.deltaTime;
+            playerLocomotion.inAirTimer += Time.deltaTime;
         }
     }
 

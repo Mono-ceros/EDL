@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플래이어의 자식 오브젝트에 붙어있어서
+/// 참조할때 유의해야함
+/// </summary>
 public class AnimatorHandler : MonoBehaviour
 {
     PlayerManager playerManager;
@@ -16,6 +20,7 @@ public class AnimatorHandler : MonoBehaviour
     {
         //로코모션 스타트문에서 애니메이터 변수들 초기화해줌
         anim = GetComponent<Animator>();
+        playerManager = GetComponentInParent<PlayerManager>();
         inputHandler = GetComponentInParent<InputHandler>();
         playerLocomotion = GetComponentInParent<PlayerLocomotion>();
         vertical = Animator.StringToHash("Vertical");

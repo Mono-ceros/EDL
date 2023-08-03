@@ -12,6 +12,8 @@ public class InputHandler : MonoBehaviour
 
     public bool space_input;
     public bool leftShift_input;
+    public bool rb_input;
+    public bool rt_input;
 
     public bool rollFlag;
     public bool sprintFlag;
@@ -20,9 +22,17 @@ public class InputHandler : MonoBehaviour
     //미리 만들어놓은 인풋액션
     PlayerControls inputActions;
 
+    PlayerAttacker playerAttacker;
+    PlayerInventory playerInventory;
+
     Vector2 movementInput;
     Vector2 cameraInput;
 
+    private void Awake()
+    {
+        playerAttacker = GetComponent<PlayerAttacker>();
+        playerInventory = GetComponent<PlayerInventory>();
+    }
 
     public void OnEnable()
     {
@@ -49,6 +59,7 @@ public class InputHandler : MonoBehaviour
         MoveInput(delta);
         HandleRollInput(delta);
         HandleSprintInput(delta);
+        HandleAttackInput(delta);
     }
 
     void MoveInput(float delta)
@@ -62,7 +73,7 @@ public class InputHandler : MonoBehaviour
         mouseY = cameraInput.y;
     }
 
-    public void HandleRollInput(float delta)
+    void HandleRollInput(float delta)
     {
         space_input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
         if (space_input)
@@ -81,11 +92,27 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    public void HandleSprintInput(float delta)
+    void HandleSprintInput(float delta)
     {
         leftShift_input = inputActions.PlayerActions.Sprint.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
         if(leftShift_input)
         sprintFlag = true;
+    }
+
+    void HandleAttackInput(float delta)
+    {
+        inputActions.PlayerActions.RB.performed += i => rb_input = true;
+        inputActions.PlayerActions.RT.performed += i => rt_input = true;
+
+        if(rb_input)
+        {
+            playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+        }
+
+        if(rt_input)
+        {
+            playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+        }
     }
 
 }

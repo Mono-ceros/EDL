@@ -40,9 +40,9 @@ public class Monster : Life
     WaitForSeconds ws;
 
     [Header("공격 사거리")]
-    public float attackDist = 0.5f;
+    public float attackDist = 1f;
     [Header("감지 거리")]
-    public float traceDist = 0.5f;
+    public float traceDist = 1f;
 
     GameObject player;
 
@@ -287,12 +287,12 @@ public class Monster : Life
 
             float dist = Vector3.Distance(transform.position,
                                            target.transform.position);
-            if (isLookPlayer && dist <= attackDist)
+            if (isTrace && dist <= attackDist)
             {
                 //원뿔 안에만 있으면 제자리보고 공격하는 이슈가 있음
                 state = State.ATTACK;
             }
-            else if (isTrace && dist <= traceDist)
+            else if (hasTarget && dist <= traceDist)
             {
                 state = State.TRACE;
             }
@@ -344,7 +344,6 @@ public class Monster : Life
                     transform.LookAt(target.transform.position);
                     monsterPatrol.Stop();
                     monsterAnimater.SetBool(hashAttack, attackAnim);
-                    Debug.Log(attackAnim);
                     //if (!enemyFire.isFire)
                     //{
                     //    enemyFire.isFire = true;
