@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int healthLevel = 10;
     public int maxHealth;
     public int currentHealth;
+    public int maxStamina;
+    public int currentStamina;
+
+    public HealthBar healthBar;
+    public StaminaBar staminaBar;
 
     private void Start()
     {
-        maxHealth = SetMaxHealthFromHealthLevel();
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
-    int SetMaxHealthFromHealthLevel()
+    void TakeDamage(int damage)
     {
-        maxHealth = healthLevel * 10;
-        return maxHealth;
+        currentHealth = currentHealth - damage;
+        healthBar.SetCurrentHealth(currentHealth);
     }
 }
