@@ -24,7 +24,7 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField]
     float minimumDistanceNeededToBeginFall = 1f;
     [SerializeField]
-    float groundDirectionRayDistance = 0.2f;
+    float groundDirectionRayDistance = 0.3f;
     LayerMask ignoreForGroundCheck;
     public float inAirTimer;
 
@@ -148,7 +148,7 @@ public class PlayerLocomotion : MonoBehaviour
             rigidbody.AddForce(moveDirection * fallingSpeed);
         }
 
-        Vector3 dir = moveDirection + Vector3.back;
+        Vector3 dir = moveDirection;
         dir.Normalize();
         origin = origin + dir * groundDirectionRayDistance;
 
@@ -163,6 +163,7 @@ public class PlayerLocomotion : MonoBehaviour
             targetPosition.y = tp.y;
 
             //0.5초 이상 떠있어야 랜드 애니메이션 실행
+            //isInAir 변수 초기화
             if(playerManager.isInAir)
             {
                 if(inAirTimer > 0.5f)
@@ -172,7 +173,7 @@ public class PlayerLocomotion : MonoBehaviour
                 }
                 else
                 {
-                    animatorHandler.PlayTargetAnimation("Land", false);
+                    animatorHandler.PlayTargetAnimation("Empty", false);
                     inAirTimer = 0;
                 }
 
@@ -191,7 +192,7 @@ public class PlayerLocomotion : MonoBehaviour
             {
                 if(playerManager.isInteracting == false)
                 {
-                    StartCoroutine(Fallani());
+                    animatorHandler.PlayTargetAnimation("Falling", true);
                 }
 
                 Vector3 vel = rigidbody.velocity;
@@ -199,30 +200,17 @@ public class PlayerLocomotion : MonoBehaviour
                 rigidbody.velocity = vel * movementSpeed;
                 playerManager.isInAir = true;
             }
-
-
         }
 
-        if(playerManager.isGrounded)
+        //러프함수를 쓰면 확실히 모션이 부드러워지는듯
+        if(playerManager.isInteracting || inputHandler.moveAmount > 0)
         {
-            if (playerManager.isInteracting || inputHandler.moveAmount> 0)
-            {
-                myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime);
-            }
-            else
-            {
-                myTransform.position = targetPosition;
-            }
+            myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime * 10f);
         }
-
+        else
+        {
+            myTransform.position = targetPosition;
+        }
     }
-
-    //떨어지는 모션이 0.1초 있다 재생되게
-    IEnumerator Fallani()
-    {
-        yield return new WaitForSeconds(0.1f);
-        animatorHandler.PlayTargetAnimation("Falling", true);
-    }
-
     #endregion
 }

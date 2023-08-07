@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class AnimatorHandler : MonoBehaviour
 {
+    public AnimationClip clip;
     PlayerManager playerManager;
     public Animator anim;
     InputHandler inputHandler;
@@ -113,6 +114,16 @@ public class AnimatorHandler : MonoBehaviour
         canRotate = false;
     }
 
+    //이것도 애니메이션 액션에서 처리하면 되는건데 할수가 없네..
+    public void EnableCombo()
+    {
+        anim.SetBool("canDoCombo", true);
+    }
+
+    public void DisableCombo()
+    {
+        anim.SetBool("canDoCombo", false);
+    }
 
     private void OnAnimatorMove()
     {

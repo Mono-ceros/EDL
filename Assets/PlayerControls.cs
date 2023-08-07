@@ -213,6 +213,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Player QuickSlots"",
+            ""id"": ""e6cd6f51-092f-4806-b694-04128b92933a"",
+            ""actions"": [
+                {
+                    ""name"": ""Up Arrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c95e251-2de0-4e22-8707-74a70a10b1c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down Arrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""65ada8d9-41a9-4f6f-a2e2-a88b59e9b8c9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left Arrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9331a7d-5496-4e78-a362-4c180eda5f15"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right Arrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""4921da74-4783-478e-b871-5e1604116b64"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e0ca034d-4c0f-4000-ad08-18154bc9a25e"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up Arrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ccd8c32-cdf6-419b-81c9-a8c769a58ed0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down Arrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6216d8ed-6b14-4acc-a113-46d5b5fd5572"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Arrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""295c6445-cb44-4c0c-a17f-2b7c187a31d9"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Arrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -227,6 +315,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_RB = m_PlayerActions.FindAction("RB", throwIfNotFound: true);
         m_PlayerActions_RT = m_PlayerActions.FindAction("RT", throwIfNotFound: true);
+        // Player QuickSlots
+        m_PlayerQuickSlots = asset.FindActionMap("Player QuickSlots", throwIfNotFound: true);
+        m_PlayerQuickSlots_UpArrow = m_PlayerQuickSlots.FindAction("Up Arrow", throwIfNotFound: true);
+        m_PlayerQuickSlots_DownArrow = m_PlayerQuickSlots.FindAction("Down Arrow", throwIfNotFound: true);
+        m_PlayerQuickSlots_LeftArrow = m_PlayerQuickSlots.FindAction("Left Arrow", throwIfNotFound: true);
+        m_PlayerQuickSlots_RightArrow = m_PlayerQuickSlots.FindAction("Right Arrow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -408,6 +502,76 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // Player QuickSlots
+    private readonly InputActionMap m_PlayerQuickSlots;
+    private List<IPlayerQuickSlotsActions> m_PlayerQuickSlotsActionsCallbackInterfaces = new List<IPlayerQuickSlotsActions>();
+    private readonly InputAction m_PlayerQuickSlots_UpArrow;
+    private readonly InputAction m_PlayerQuickSlots_DownArrow;
+    private readonly InputAction m_PlayerQuickSlots_LeftArrow;
+    private readonly InputAction m_PlayerQuickSlots_RightArrow;
+    public struct PlayerQuickSlotsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public PlayerQuickSlotsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UpArrow => m_Wrapper.m_PlayerQuickSlots_UpArrow;
+        public InputAction @DownArrow => m_Wrapper.m_PlayerQuickSlots_DownArrow;
+        public InputAction @LeftArrow => m_Wrapper.m_PlayerQuickSlots_LeftArrow;
+        public InputAction @RightArrow => m_Wrapper.m_PlayerQuickSlots_RightArrow;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerQuickSlots; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerQuickSlotsActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Add(instance);
+            @UpArrow.started += instance.OnUpArrow;
+            @UpArrow.performed += instance.OnUpArrow;
+            @UpArrow.canceled += instance.OnUpArrow;
+            @DownArrow.started += instance.OnDownArrow;
+            @DownArrow.performed += instance.OnDownArrow;
+            @DownArrow.canceled += instance.OnDownArrow;
+            @LeftArrow.started += instance.OnLeftArrow;
+            @LeftArrow.performed += instance.OnLeftArrow;
+            @LeftArrow.canceled += instance.OnLeftArrow;
+            @RightArrow.started += instance.OnRightArrow;
+            @RightArrow.performed += instance.OnRightArrow;
+            @RightArrow.canceled += instance.OnRightArrow;
+        }
+
+        private void UnregisterCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            @UpArrow.started -= instance.OnUpArrow;
+            @UpArrow.performed -= instance.OnUpArrow;
+            @UpArrow.canceled -= instance.OnUpArrow;
+            @DownArrow.started -= instance.OnDownArrow;
+            @DownArrow.performed -= instance.OnDownArrow;
+            @DownArrow.canceled -= instance.OnDownArrow;
+            @LeftArrow.started -= instance.OnLeftArrow;
+            @LeftArrow.performed -= instance.OnLeftArrow;
+            @LeftArrow.canceled -= instance.OnLeftArrow;
+            @RightArrow.started -= instance.OnRightArrow;
+            @RightArrow.performed -= instance.OnRightArrow;
+            @RightArrow.canceled -= instance.OnRightArrow;
+        }
+
+        public void RemoveCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            if (m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerQuickSlotsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerQuickSlotsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerQuickSlotsActions @PlayerQuickSlots => new PlayerQuickSlotsActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -419,5 +583,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
+    }
+    public interface IPlayerQuickSlotsActions
+    {
+        void OnUpArrow(InputAction.CallbackContext context);
+        void OnDownArrow(InputAction.CallbackContext context);
+        void OnLeftArrow(InputAction.CallbackContext context);
+        void OnRightArrow(InputAction.CallbackContext context);
     }
 }

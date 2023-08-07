@@ -14,16 +14,21 @@ public class InputHandler : MonoBehaviour
     public bool leftShift_input;
     public bool rb_input;
     public bool rt_input;
+    public bool Up_Arrow;
+    public bool Down_Arrow;
+    public bool Left_Arrow;
+    public bool Right_Arrow;
 
     public bool rollFlag;
     public bool sprintFlag;
+    public bool comboFlag;
     public float rollInputTimer;
 
     //미리 만들어놓은 인풋액션
     PlayerControls inputActions;
-
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
+    PlayerManager playerManager;
 
     Vector2 movementInput;
     Vector2 cameraInput;
@@ -32,6 +37,7 @@ public class InputHandler : MonoBehaviour
     {
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     public void OnEnable()
@@ -60,6 +66,7 @@ public class InputHandler : MonoBehaviour
         HandleRollInput(delta);
         HandleSprintInput(delta);
         HandleAttackInput(delta);
+        HandleQuickSlotsInput(delta);
     }
 
     void MoveInput(float delta)
@@ -106,12 +113,42 @@ public class InputHandler : MonoBehaviour
 
         if(rb_input)
         {
-            playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            if(playerManager.canDoCombo)
+            {
+                comboFlag = true;
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                comboFlag = false;
+            }
+            else
+            {
+                if (playerManager.isInteracting)
+                    return;
+
+                if (playerManager.canDoCombo)
+                    return;
+
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
         }
 
         if(rt_input)
         {
             playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+        }
+    }
+
+    void HandleQuickSlotsInput(float delta)
+    {
+        inputActions.PlayerQuickSlots.RightArrow.performed += i => Right_Arrow = true;
+        inputActions.PlayerQuickSlots.LeftArrow.performed += i => Left_Arrow = true;
+        
+        if (Right_Arrow)
+        {
+            playerInventory.ChangeRightWeapon();
+        }
+        else if (Left_Arrow)
+        {
+            playerInventory.ChangeLeftWeapon();
         }
     }
 

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2393990}
   - component: {fileID: 64901923116074888}
   - component: {fileID: 64222384785719952}
-  - component: {fileID: 64008040012166404}
   m_Layer: 8
   m_Name: SM_Env_Wall_DoorFrame_Double_Round_01
   m_TagString: Untagged
@@ -114,17 +113,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43612235118596570, guid: 9ed1b34b243e4e6499343ab1b122147b, type: 2}
---- !u!64 &64008040012166404
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115268}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43805696228955450, guid: 9ed1b34b243e4e6499343ab1b122147b, type: 2}

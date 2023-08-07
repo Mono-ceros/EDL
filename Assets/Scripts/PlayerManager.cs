@@ -13,12 +13,13 @@ public class PlayerManager : MonoBehaviour
     public bool isInteracting;
     public bool isInAir;
     public bool isGrounded;
+    public bool canDoCombo;
 
     public float interractTime;
 
     private void Awake()
     {
-        cameraHandler = CameraHandler.singleton;
+        cameraHandler = FindObjectOfType<CameraHandler>();
     }
 
     void Start()
@@ -33,6 +34,7 @@ public class PlayerManager : MonoBehaviour
         float delta = Time.deltaTime;
 
         isInteracting = anim.GetBool("isInteracting");
+        canDoCombo = anim.GetBool("canDoCombo");
 
         //플래이어 포지션
         inputHandler.TickInput(delta);
@@ -47,6 +49,10 @@ public class PlayerManager : MonoBehaviour
         inputHandler.sprintFlag = false;
         inputHandler.rb_input = false;
         inputHandler.rt_input = false;
+        inputHandler.Up_Arrow = false;
+        inputHandler.Down_Arrow = false;
+        inputHandler.Left_Arrow = false;
+        inputHandler.Right_Arrow = false;
 
         if(isInAir)
         {

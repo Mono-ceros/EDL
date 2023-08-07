@@ -36,8 +36,8 @@ ModelImporter:
       name: "One Hand Club Combo - \uBCF5\uC0AC\uBCF8"
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 109
+      firstFrame: 31
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -191,6 +191,94 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Player QuickSlots",
+            "id": "e6cd6f51-092f-4806-b694-04128b92933a",
+            "actions": [
+                {
+                    "name": "Up Arrow",
+                    "type": "Button",
+                    "id": "3c95e251-2de0-4e22-8707-74a70a10b1c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down Arrow",
+                    "type": "Button",
+                    "id": "65ada8d9-41a9-4f6f-a2e2-a88b59e9b8c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left Arrow",
+                    "type": "Button",
+                    "id": "d9331a7d-5496-4e78-a362-4c180eda5f15",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right Arrow",
+                    "type": "Button",
+                    "id": "4921da74-4783-478e-b871-5e1604116b64",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e0ca034d-4c0f-4000-ad08-18154bc9a25e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ccd8c32-cdf6-419b-81c9-a8c769a58ed0",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6216d8ed-6b14-4acc-a113-46d5b5fd5572",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "295c6445-cb44-4c0c-a17f-2b7c187a31d9",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

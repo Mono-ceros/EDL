@@ -20,9 +20,9 @@ public class CameraHandler : MonoBehaviour
     //싱글턴
     public static CameraHandler singleton;
 
-    public float lookSpeed = 0.1f;
-    public float followSpeed = 0.1f;
-    public float pivotSpeed = 0.03f;
+    public float lookSpeed = 0.05f;
+    public float followSpeed = 0.05f;
+    public float pivotSpeed = 0.02f;
 
     float targetPosition;
     float defaultPosition;
@@ -43,6 +43,7 @@ public class CameraHandler : MonoBehaviour
         defaultPosition = cameraTransform.localPosition.z;
         //8,9,10번째 레이어를 제외한 레이어
         ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+        targetTransform = FindObjectOfType<PlayerManager>().transform;
     }
 
     public void FollowTarget(float delta)
