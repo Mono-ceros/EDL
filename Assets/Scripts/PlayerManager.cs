@@ -47,8 +47,8 @@ public class PlayerManager : MonoBehaviour
     {
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
-        inputHandler.rb_input = false;
-        inputHandler.rt_input = false;
+        inputHandler.leftClick_input = false;
+        inputHandler.wheel_input = false;
         inputHandler.Up_Arrow = false;
         inputHandler.Down_Arrow = false;
         inputHandler.Left_Arrow = false;

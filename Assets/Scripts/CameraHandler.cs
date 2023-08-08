@@ -31,7 +31,7 @@ public class CameraHandler : MonoBehaviour
     public float minimumPivot = -35;
     public float maximumPivot = 35;
 
-    public float cameraSphereRadius = 0.2f;
+    public float cameraSphereRadius = 0.3f;
     public float cameraCollisionOffset = 0.2f;
     public float minimumCollisionOffset = 0.2f;
 
@@ -86,7 +86,7 @@ public class CameraHandler : MonoBehaviour
         if (Physics.SphereCast
             (cameraPivotTransform.position,
              cameraSphereRadius, direction,
-             out hit, 2,
+             out hit, 0.1f,
              ignoreLayers))
         {
             float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);

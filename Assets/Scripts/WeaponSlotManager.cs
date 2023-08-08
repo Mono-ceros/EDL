@@ -14,11 +14,20 @@ public class WeaponSlotManager : MonoBehaviour
     DamageCollider leftHandDamageCollider;
     DamageCollider rightHandDamageCollider;
 
+    public WeaponItem attackingWeapon;
+
     Animator animator;
+
+    QuickSlotUI quickSlotUI;
+
+    PlayerStats playerStats;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        quickSlotUI = FindObjectOfType<QuickSlotUI>();
+        playerStats = GetComponentInParent<PlayerStats>();
+
         WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
         foreach(WeaponHolderSlot weaponSlot in weaponHolderSlots)
         {
@@ -39,6 +48,8 @@ public class WeaponSlotManager : MonoBehaviour
         {
             leftHandSlot.LoadWeaponModel(weaponItem);
             LoadLeftWeaponDamageCollider();
+            quickSlotUI.UpdateWeaponQuickSlotsUI(true, weaponItem);
+
 
             if(weaponItem != null)
             {
@@ -53,6 +64,7 @@ public class WeaponSlotManager : MonoBehaviour
         {
             rightHandSlot.LoadWeaponModel(weaponItem);
             LoadRightWeaponDamageCollider();
+            quickSlotUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
 
             if (weaponItem != null)
             {
@@ -65,6 +77,7 @@ public class WeaponSlotManager : MonoBehaviour
         }
     }
 
+    #region 공격 데미지 핸들링
     void LoadLeftWeaponDamageCollider()
     {
         leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
@@ -76,6 +89,8 @@ public class WeaponSlotManager : MonoBehaviour
     }
 
     //밑에 전부 애니메이션 액션
+    //리드 온리 애니메이션인 경우 인풋 되는데서 억지로 제어할수도 있겠지만
+    //그냥 애니메이션이면 액션써서 편하게 할수있으니까
     public void OpenLeftDamageCollider()
     {
         leftHandDamageCollider.EnableDamageCollider();
@@ -95,5 +110,17 @@ public class WeaponSlotManager : MonoBehaviour
     {
         rightHandDamageCollider.DisableDamageCollider();
     }
+    #endregion
 
+    #region 공격 스테미너 감소 핸들링
+    public void DrainStaminaLightAttack()
+    {
+        playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.lightAttackMultiplier));
+    }
+
+    public void DrainStaminaHeavyAttack()
+    {
+        playerStats.TakeStaminaDamage(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackMultiplier));
+    }
+    #endregion
 }

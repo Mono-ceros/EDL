@@ -12,8 +12,8 @@ public class InputHandler : MonoBehaviour
 
     public bool space_input;
     public bool leftShift_input;
-    public bool rb_input;
-    public bool rt_input;
+    public bool leftClick_input;
+    public bool wheel_input;
     public bool Up_Arrow;
     public bool Down_Arrow;
     public bool Left_Arrow;
@@ -59,7 +59,7 @@ public class InputHandler : MonoBehaviour
         inputActions.Disable();
     }
     
-
+    //사실상 인풋핸들러를 몽땅 들고가서 플레이어 매니저 업데이트문에서 돌림
     public void TickInput(float delta)
     {
         MoveInput(delta);
@@ -108,10 +108,10 @@ public class InputHandler : MonoBehaviour
 
     void HandleAttackInput(float delta)
     {
-        inputActions.PlayerActions.RB.performed += i => rb_input = true;
-        inputActions.PlayerActions.RT.performed += i => rt_input = true;
+        inputActions.PlayerActions.RB.performed += i => leftClick_input = true;
+        inputActions.PlayerActions.RT.performed += i => wheel_input = true;
 
-        if(rb_input)
+        if(leftClick_input)
         {
             if(playerManager.canDoCombo)
             {
@@ -131,7 +131,7 @@ public class InputHandler : MonoBehaviour
             }
         }
 
-        if(rt_input)
+        if(wheel_input)
         {
             playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
         }

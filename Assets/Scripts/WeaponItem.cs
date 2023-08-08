@@ -19,4 +19,9 @@ public class WeaponItem : Item
     public string oh_Light_Attack_2;
     public string oh_Light_Attack_3;
     public string oh_Heavy_Attack_1;
+
+    [Header("스테미나 소모")]
+    public int baseStamina;
+    public float lightAttackMultiplier;
+    public float heavyAttackMultiplier;
 }
