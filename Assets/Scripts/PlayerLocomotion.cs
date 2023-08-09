@@ -7,6 +7,8 @@ public class PlayerLocomotion : MonoBehaviour
 {
     PlayerManager playerManager;
     Transform cameraObject;
+    PlayerStats playerStats;
+    StaminaBar staminaBar;
     public InputHandler inputHandler;
     public  Vector3 moveDirection;
 
@@ -42,6 +44,8 @@ public class PlayerLocomotion : MonoBehaviour
         playerManager = GetComponent<PlayerManager>();
         rigidbody = GetComponent<Rigidbody>();
         inputHandler = GetComponent<InputHandler>();
+        playerStats = GetComponent<PlayerStats>();
+        staminaBar = FindObjectOfType<StaminaBar>();
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
         cameraObject = Camera.main.transform;
         myTransform = transform;
@@ -115,17 +119,17 @@ public class PlayerLocomotion : MonoBehaviour
         if (animatorHandler.anim.GetBool("isInteracting"))
             return;
 
-        if(inputHandler.rollFlag)
+        if(inputHandler.rollFlag && playerStats.currentStamina >= 20)
         {
+            playerStats.currentStamina -= 20;
+            staminaBar.SetCurrentStamina(playerStats.currentStamina);
             moveDirection = (cameraObject.forward * inputHandler.vertical) + (cameraObject.right * inputHandler.horizontal);
 
-            if(inputHandler.moveAmount > 0)
-            {
                 animatorHandler.PlayTargetAnimation("Rolling", true);
                 moveDirection.y = 0;
                 Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                 myTransform.rotation = rollRotation;
-            }
+            
         }
 
     }
@@ -144,7 +148,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         if(playerManager.isInAir)
         {
-            rigidbody.AddForce(-Vector3.up * fallingSpeed * 3);
+            rigidbody.AddForce(Vector3.up * fallingSpeed * -3);
             rigidbody.AddForce(moveDirection * fallingSpeed);
         }
 

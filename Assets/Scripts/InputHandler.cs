@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
@@ -82,6 +83,7 @@ public class InputHandler : MonoBehaviour
 
     void HandleRollInput(float delta)
     {
+        //inputActions.PlayerActions.Roll.performed += i => space_input = true;
         space_input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
         if (space_input)
         {
@@ -101,6 +103,7 @@ public class InputHandler : MonoBehaviour
 
     void HandleSprintInput(float delta)
     {
+        //inputActions.PlayerActions.Sprint.performed += i => leftShift_input = true;
         leftShift_input = inputActions.PlayerActions.Sprint.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
         if(leftShift_input)
         sprintFlag = true;
