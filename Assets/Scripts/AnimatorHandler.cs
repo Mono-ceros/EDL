@@ -129,13 +129,13 @@ public class AnimatorHandler : MonoBehaviour
     {
         if (playerManager.isInteracting == false)
             return;
-        float delta = Time.deltaTime;
         //리지드바디 저항을 0으로
         playerLocomotion.rigidbody.drag = 0;
         //델타포지션으로 애니메이션 벨로시티값을 따라감
         Vector3 deltaPosition = anim.deltaPosition;
         deltaPosition.y = 0;
-        Vector3 velocity = deltaPosition / delta;
+        //원래 나눴음
+        Vector3 velocity = deltaPosition * Time.deltaTime;
         playerLocomotion.rigidbody.velocity = velocity;
     }
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
 {
-    public int maxHealth = 200;
-    public int currentHealth;
+    public float maxHealth = 200;
+    public float currentHealth;
 
     Animator animator;
 

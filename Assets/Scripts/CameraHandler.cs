@@ -37,7 +37,7 @@ public class CameraHandler : MonoBehaviour
 
     private void Awake()
     {
-            singleton = this;
+        singleton = this;
         myTransform = transform;
         //자식 오브젝트 위치 만질때 로컬포지션
         defaultPosition = cameraTransform.localPosition.z;
@@ -86,18 +86,20 @@ public class CameraHandler : MonoBehaviour
         if (Physics.SphereCast
             (cameraPivotTransform.position,
              cameraSphereRadius, direction,
-             out hit, 0.1f,
+             out hit, 5f,
              ignoreLayers))
         {
-            float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);
-            targetPosition = -(dis - cameraCollisionOffset);
+            cameraTransform.localPosition = hit.point;
+            //float dis = Vector3.Distance(cameraPivotTransform.position, hit.point);
+            //targetPosition = -(dis - cameraCollisionOffset);
+
         }
 
         //카메라가 너무 가까워지는걸 방지
-        if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
-        {
-            targetPosition = -minimumCollisionOffset;
-        }
+        //if (Mathf.Abs(targetPosition) < minimumCollisionOffset)
+        //{
+        //    targetPosition = -minimumCollisionOffset;
+        //}
 
         camerTransformPosition.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPosition, delta * 10f);
         cameraTransform.localPosition = camerTransformPosition;

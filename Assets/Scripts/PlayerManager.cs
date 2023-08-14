@@ -7,8 +7,9 @@ public class PlayerManager : MonoBehaviour
     public InputHandler inputHandler;
     Animator anim;
 
-    CameraHandler cameraHandler;
     PlayerLocomotion playerLocomotion;
+    PlayerStats playerStats;
+    StaminaBar staminaBar;
 
     public bool isInteracting;
     public bool isInAir;
@@ -17,16 +18,13 @@ public class PlayerManager : MonoBehaviour
 
     public float interractTime;
 
-    private void Awake()
-    {
-        cameraHandler = FindObjectOfType<CameraHandler>();
-    }
-
     void Start()
     {
         inputHandler = GetComponent<InputHandler>();
         anim = GetComponentInChildren<Animator>();
         playerLocomotion = GetComponent<PlayerLocomotion>();
+        playerStats = GetComponent<PlayerStats>();
+        staminaBar = FindObjectOfType<StaminaBar>();
     }
 
     void Update()
@@ -41,11 +39,11 @@ public class PlayerManager : MonoBehaviour
         playerLocomotion.HandleMovement(delta);
         playerLocomotion.HandlRollingAndSprinting(delta);
         playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
+        playerLocomotion.HandleGroundCheck();
     }
 
     private void LateUpdate()
     {
-        inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
         inputHandler.leftClick_input = false;
         inputHandler.wheel_input = false;
@@ -60,15 +58,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        float delta = Time.deltaTime;
+    //private void FixedUpdate()
+    //{
+    //    float delta = Time.deltaTime;
 
-        if (cameraHandler != null)
-        {
-            cameraHandler.FollowTarget(delta);
-            cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-        }
-    }
+    //    if (cameraHandler != null)
+    //    {
+    //        cameraHandler.FollowTarget(delta);
+    //        cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+    //    }
+    //}
 
 }

@@ -30,6 +30,8 @@ public class InputHandler : MonoBehaviour
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
     PlayerManager playerManager;
+    PlayerStats playerStats;
+    StaminaBar staminaBar;
 
     Vector2 movementInput;
     Vector2 cameraInput;
@@ -39,6 +41,8 @@ public class InputHandler : MonoBehaviour
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
         playerManager = GetComponent<PlayerManager>();
+        playerStats = GetComponent<PlayerStats>();
+        staminaBar = FindObjectOfType<StaminaBar>();
     }
 
     public void OnEnable()
@@ -91,10 +95,14 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            if(rollInputTimer > 0 && rollInputTimer < 0.4f)
+            if(rollInputTimer > 0 && rollInputTimer <= 0.4f)
             {
                 sprintFlag = false;
                 rollFlag = true;
+            }
+            else
+            {
+                rollFlag = false;
             }
 
             rollInputTimer = 0;
@@ -105,7 +113,7 @@ public class InputHandler : MonoBehaviour
     {
         //inputActions.PlayerActions.Sprint.performed += i => leftShift_input = true;
         leftShift_input = inputActions.PlayerActions.Sprint.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-        if(leftShift_input)
+        if(leftShift_input && playerStats.currentStamina >= 5f)
         sprintFlag = true;
     }
 
@@ -114,9 +122,11 @@ public class InputHandler : MonoBehaviour
         inputActions.PlayerActions.RB.performed += i => leftClick_input = true;
         inputActions.PlayerActions.RT.performed += i => wheel_input = true;
 
-        if(leftClick_input)
+        if(leftClick_input && playerStats.currentStamina > 20)
         {
-            if(playerManager.canDoCombo)
+            playerStats.currentStamina -= 20f;
+            staminaBar.SetCurrentStamina(playerStats.currentStamina);
+            if (playerManager.canDoCombo)
             {
                 comboFlag = true;
                 playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
@@ -130,13 +140,15 @@ public class InputHandler : MonoBehaviour
                 if (playerManager.canDoCombo)
                     return;
 
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                playerAttacker.HandleLightAttack(playerInventory.weaponsInRightHandSlots[playerInventory.currentRightWeaponIndex]);
             }
         }
 
-        if(wheel_input)
+        if(wheel_input && playerStats.currentStamina > 30)
         {
-            playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            playerStats.currentStamina -= 30f;
+            staminaBar.SetCurrentStamina(playerStats.currentStamina);
+            playerAttacker.HandleHeavyAttack(playerInventory.weaponsInRightHandSlots[playerInventory.currentRightWeaponIndex]);
         }
     }
 

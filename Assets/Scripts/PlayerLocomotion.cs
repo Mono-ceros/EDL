@@ -9,8 +9,14 @@ public class PlayerLocomotion : MonoBehaviour
     Transform cameraObject;
     PlayerStats playerStats;
     StaminaBar staminaBar;
+    CharacterController characterController;
     public InputHandler inputHandler;
-    public  Vector3 moveDirection;
+    public Vector3 moveDirection;
+    Vector3 yVelocity;
+
+    public bool allowMovement = true;
+    public bool allowRotation = true;
+    bool fallingVelocitySet = false;
 
     [HideInInspector]
     public Transform myTransform;
@@ -35,12 +41,13 @@ public class PlayerLocomotion : MonoBehaviour
     [SerializeField]
     float sprintSpeed = 6;
     [SerializeField]
-    float rotationSpeed = 10;
+    float rotationSpeed = 0.1f;
     [SerializeField]
     float fallingSpeed = 80;
 
     void Start()
     {
+        characterController = GetComponent<CharacterController>();
         playerManager = GetComponent<PlayerManager>();
         rigidbody = GetComponent<Rigidbody>();
         inputHandler = GetComponent<InputHandler>();
@@ -96,10 +103,19 @@ public class PlayerLocomotion : MonoBehaviour
 
         float speed = movementSpeed;
 
-        if (inputHandler.sprintFlag)
+        if (playerManager.isGrounded)
         {
-            speed = sprintSpeed;
+            if (inputHandler.sprintFlag)
+            {
+                speed = sprintSpeed;
+                playerManager.isInteracting = true;
+                playerStats.currentStamina -= 10f * Time.deltaTime;
+                staminaBar.SetCurrentStamina(playerStats.currentStamina);
+            }
         }
+
+        moveDirection = moveDirection * speed * Time.deltaTime;
+        characterController.Move(moveDirection);
 
         //movementSpeed *= speed;
         Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
@@ -113,15 +129,22 @@ public class PlayerLocomotion : MonoBehaviour
             HandleRotation(delta);
         }
     }
+    //public void HandleMovement()
+    //{
+    //Vector3 rotationDirection = moveDirection;
+    //            Quaternion tr = Quaternion.LookRotation(rotationDirection);
+    //Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+    //transform.rotation = targetRotation;
+    // }
 
     public void HandlRollingAndSprinting(float delta)
     {
-        if (animatorHandler.anim.GetBool("isInteracting"))
+        if (playerManager.isInteracting)
             return;
 
-        if(inputHandler.rollFlag && playerStats.currentStamina >= 20)
+        if(inputHandler.rollFlag && playerStats.currentStamina >= 20f)
         {
-            playerStats.currentStamina -= 20;
+            playerStats.currentStamina -= 20f;
             staminaBar.SetCurrentStamina(playerStats.currentStamina);
             moveDirection = (cameraObject.forward * inputHandler.vertical) + (cameraObject.right * inputHandler.horizontal);
 
@@ -136,7 +159,7 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleFalling(float delta, Vector3 moveDirection)
     {
-        playerManager.isGrounded = false;
+        playerManager.isGrounded = Physics.CheckSphere(transform.position, 0.1f, 1);
         RaycastHit hit;
         Vector3 origin = myTransform.position;
         origin.y += groundDetectionRayStartPoint;
@@ -144,12 +167,6 @@ public class PlayerLocomotion : MonoBehaviour
         if(Physics.Raycast(origin, myTransform.forward, out hit, 0.4f))
         {
             moveDirection = Vector3.zero;
-        }
-
-        if(playerManager.isInAir)
-        {
-            rigidbody.AddForce(Vector3.up * fallingSpeed * -3);
-            rigidbody.AddForce(moveDirection * fallingSpeed);
         }
 
         Vector3 dir = moveDirection;
@@ -163,7 +180,6 @@ public class PlayerLocomotion : MonoBehaviour
         {
             normalVector = hit.normal;
             Vector3 tp = hit.point;
-            playerManager.isGrounded = true;
             targetPosition.y = tp.y;
 
             //0.5초 이상 떠있어야 랜드 애니메이션 실행
@@ -187,11 +203,6 @@ public class PlayerLocomotion : MonoBehaviour
         //떨어지는 중일때
         else
         {
-            if(playerManager.isGrounded)
-            {
-                playerManager.isGrounded = false;
-            }
-
             if(playerManager.isInAir == false)
             {
                 if(playerManager.isInteracting == false)
@@ -216,5 +227,19 @@ public class PlayerLocomotion : MonoBehaviour
             myTransform.position = targetPosition;
         }
     }
+
+    public void HandleGroundCheck()
+    {
+        if (!playerManager.isGrounded)
+        {
+            yVelocity.y = -0.2f;
+        }
+        else
+        {
+            yVelocity.y = 0f;
+        }
+        characterController.Move(yVelocity);
+    }
+
     #endregion
 }

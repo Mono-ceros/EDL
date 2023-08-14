@@ -11,7 +11,9 @@ public class WeaponSlotManager : MonoBehaviour
     WeaponHolderSlot leftHandSlot;
     WeaponHolderSlot rightHandSlot;
 
+    [SerializeField]
     DamageCollider leftHandDamageCollider;
+    [SerializeField]
     DamageCollider rightHandDamageCollider;
 
     public WeaponItem attackingWeapon;

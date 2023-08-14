@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 472488}
   - component: {fileID: 3369534}
   - component: {fileID: 2325924}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SM_Env_Door_Frame_Round_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &472488
 Transform:

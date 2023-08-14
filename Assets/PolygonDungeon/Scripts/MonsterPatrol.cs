@@ -11,7 +11,7 @@ public class MonsterPatrol : MonoBehaviour
     NavMeshAgent agent;
 
     readonly float patrolSpeed = 1.5f;
-    readonly float traceSpeed = 4.0f;
+    readonly float traceSpeed = 2.0f;
 
     float damping = 1f; //회전속도 조절 계수
     Transform enemyTr;

@@ -7,13 +7,13 @@ using UnityEngine.PlayerLoop;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int maxHealth = 200;
+    public float maxHealth = 200;
     [Range(0, 200)]
-    public int currentHealth;
+    public float currentHealth;
 
-    public int maxStamina = 200;
+    public float maxStamina = 200;
     [Range(0, 200)]
-    public int currentStamina;
+    public float currentStamina;
 
     public float restTime;
 
@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
     public StaminaBar staminaBar;
     AnimatorHandler animatorHandler;
     PlayerManager playerManager;
+    InputHandler inputHandler;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class PlayerStats : MonoBehaviour
         staminaBar = FindAnyObjectByType<StaminaBar>();
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
         playerManager = GetComponent<PlayerManager>();
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void Start()
@@ -55,11 +57,11 @@ public class PlayerStats : MonoBehaviour
                 restTime = 0;
             }
 
-            if (restTime >= 1 && currentStamina <= 200)
+            if (restTime >= 0.5 && currentStamina <= 200)
             {
-                currentStamina = Mathf.Min(200, currentStamina + 5);
+                currentStamina = Mathf.Min(200, currentStamina + 10);
                 staminaBar.SetCurrentStamina(currentStamina);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
             }
             else
             {

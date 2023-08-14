@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3332214}
   - component: {fileID: 2308610}
   - component: {fileID: 65107192382334934}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: SM_Env_Wall_End_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &474234
 Transform:
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 42b64fdb315e3054ea757d8d1c4bcfa7, type: 2}
+  - {fileID: 2100000, guid: 54061fa668860e54a8e96694301d76a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

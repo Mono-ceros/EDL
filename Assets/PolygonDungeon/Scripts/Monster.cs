@@ -21,7 +21,8 @@ public class Monster : Life
     //달리기랑 걷기
     //달리기를 하면 일정범위 감지해서 바로 추적
     public int playerLayer; // 추적 대상 레이어
-    private Life target; // 추적 대상
+    [SerializeField]
+    Life target; // 추적 대상
     NavMeshAgent navMeshAgent; // 경로 계산 AI 에이전트
 
     //자식으로 넣은 파티클 참조
@@ -29,8 +30,8 @@ public class Monster : Life
 
     public AudioClip deathSound; // 사망 시 재생할 소리
     public AudioClip hitSound; // 피격 시 재생할 소리
-    private Animator monsterAnimater; // 애니메이터 컴포넌트
-    private AudioSource monsterAudioPlayer; // 오디오 소스 컴포넌트
+    Animator monsterAnimater; // 애니메이터 컴포넌트
+    AudioSource monsterAudioPlayer; // 오디오 소스 컴포넌트
     MonsterPatrol monsterPatrol;
 
     public float damage; // 공격력
@@ -101,7 +102,7 @@ public class Monster : Life
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        monsterAnimater = GetComponent<Animator>();
+        monsterAnimater = GetComponentInChildren<Animator>();
         monsterAudioPlayer = GetComponent<AudioSource>();
         monsterPatrol = GetComponent<MonsterPatrol>();
         playerLayer = LayerMask.NameToLayer("Player");
@@ -123,27 +124,11 @@ public class Monster : Life
 
     private new void OnEnable()
     {
-        //StartCoroutine(UpdatePath());
         player = GameObject.FindGameObjectWithTag("Player");
-        //if (player != null)
-        //{
-            target = player.GetComponent<Life>();
+        target = player.GetComponent<Life>();
 
-        //}
         StartCoroutine(CheckState());
         StartCoroutine(Action());
-    }
-
-    bool hasplayer
-    {
-        get
-        {
-            if(player != null)
-            {
-                return true;
-            }
-            return false;
-        }
     }
 
     bool hasTarget
@@ -341,7 +326,7 @@ public class Monster : Life
                     monsterAnimater.SetBool(hashAttack, attackAnim);
                     break;
                 case State.ATTACK:
-                    transform.LookAt(target.transform.position);
+                    //transform.LookAt(target.transform.position);
                     monsterPatrol.Stop();
                     monsterAnimater.SetBool(hashAttack, attackAnim);
                     //if (!enemyFire.isFire)
